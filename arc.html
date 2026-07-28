@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#14171a">
-<title>Devarth V. Sambare · Unreal Engine Developer</title>
-<meta name="description" content="Unreal Engine Developer building VR, multiplayer, and physics games. Shipped work for the UP Government, Apollo Hospital, and more.">
-<meta property="og:title" content="Devarth V. Sambare · Unreal Engine Developer">
-<meta property="og:description" content="VR, multiplayer, and physics games in Unreal Engine. Open to full-time roles.">
+<title>Devarth V. Sambare · Unreal Engine · Archviz & Real Estate</title>
+<meta name="description" content="Unreal Engine Developer building real-time architectural visualization, VR walkthroughs, and interactive 3D for real estate — Cesium, Gaussian Splatting, 360° tours.">
+<meta property="og:title" content="Devarth V. Sambare · Unreal Engine · Archviz & Real Estate">
+<meta property="og:description" content="Real-time archviz, VR walkthroughs, and interactive 3D for real estate. Open to full-time roles.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -375,6 +375,23 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
 }
 #lightbox .lb-close:hover { background: var(--sage); color: var(--bg); border-color: var(--sage); }
 
+/* ============ CAPTURE & TOURS ============ */
+.capture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.capture-card {
+  border: 1px solid var(--line); background: var(--bg-1);
+  display: flex; flex-direction: column; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.capture-card:hover { border-color: var(--sage); transform: translateY(-3px); }
+.capture-media { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+.capture-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.capture-card:hover .capture-media img { transform: scale(1.04); }
+.capture-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.capture-card .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); }
+.capture-card h4 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+.capture-card p { font-size: 13.5px; color: var(--ink-dim); line-height: 1.55; flex: 1; }
+.capture-card .go { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--sage); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
@@ -388,9 +405,10 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
   <div class="nav-brand" onclick="scrollTo({top:0,behavior:'smooth'})">Devarth V. Sambare<span class="dot">.</span></div>
   <div class="nav-links">
     <a class="nav-link" href="#work">Work</a>
+    <a class="nav-link" href="#capture">Capture</a>
     <a class="nav-link" href="#more">More</a>
     <a class="nav-link" href="#about">About</a>
-    <a class="nav-cta" href="assets/resume.pdf" target="_blank">Résumé</a>
+    <a class="nav-cta" href="assets/resume-archviz.pdf" target="_blank">Résumé</a>
   </div>
 </nav>
 
@@ -401,13 +419,13 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
     <span class="line"><span><em>Sambare</em></span></span>
   </h1>
   <p class="hero-sub">
-    Unreal Engine Developer building <strong>VR, multiplayer, and physics</strong> games.
-    Shipped work played by thousands, for clients like the <strong>UP Government</strong> and <strong>Apollo Hospital</strong>.
+    Unreal Engine Developer putting <strong>real properties in their real surroundings</strong>:
+    archviz products, VR walkthroughs, and interactive 3D — plus shipped games played by thousands.
   </p>
   <div class="hero-meta">
     <div class="hero-meta-item"><span class="k">Role</span><span class="v">Unreal Engine Developer</span></div>
     <div class="hero-meta-item"><span class="k">Studio</span><span class="v">Agovthi · since 2024</span></div>
-    <div class="hero-meta-item"><span class="k">Focus</span><span class="v">Gameplay · Multiplayer · VR</span></div>
+    <div class="hero-meta-item"><span class="k">Focus</span><span class="v">Archviz · Real-Time 3D · VR</span></div>
     <div class="hero-meta-item"><span class="k">Based in</span><span class="v">Mumbai region, India</span></div>
   </div>
   <div class="hero-scroll">Scroll to the work</div>
@@ -421,15 +439,65 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
     <h2>Selected Work</h2>
   </div>
   <p class="section-intro reveal">
-    Five shipped projects, deployed to real users: children at a national event, hospital patients,
-    museum visitors, government officials. Each one had a real deadline and a real install.
+    Six shipped projects, deployed to real users: property buyers, museum visitors, hospital patients,
+    children at a national event. Each one had a real deadline and a real install.
   </p>
   <div id="projects-root"></div>
 </section>
 
-<section class="section" id="more">
+<section class="section" id="capture">
   <div class="section-head reveal">
     <span class="idx">02</span>
+    <h2>Capture &amp; Tours</h2>
+  </div>
+  <p class="section-intro reveal">
+    Real-estate visualization beyond the engine: floor-by-floor 360° tours built on professional
+    drone photography, and Gaussian splat captures of real buildings — all shipped straight to the browser.
+    Every card below is live. Open it.
+  </p>
+  <div class="capture-grid">
+    <a class="capture-card reveal" href="https://theflyingturtle.in/Puravankara/" target="_blank" rel="noopener">
+      <div class="capture-media"><img src="assets/projects/capture/puravankara.jpg" alt="Purva Miami — Experience the View" loading="lazy"></div>
+      <div class="capture-body">
+        <span class="k">360° Virtual Tour</span>
+        <h4>Purva Miami · Breach Candy</h4>
+        <p>"Experience the View" for MIAMI in Purva: pick a floor up to the top, flip between sea and city view, switch day, evening, and night — with real travel times to landmarks like the Coastal Road pinned in the panorama.</p>
+        <span class="go">Open the tour ↗</span>
+      </div>
+    </a>
+    <a class="capture-card reveal" href="https://theflyingturtle.in/Satyam/" target="_blank" rel="noopener">
+      <div class="capture-media"><img src="assets/projects/capture/satyam.jpg" alt="Satyam — 360 tour, night view" loading="lazy"></div>
+      <div class="capture-body">
+        <span class="k">360° Virtual Tour</span>
+        <h4>Satyam</h4>
+        <p>A floor-by-floor tour for Satyam Developers &amp; Metro Group — day, evening, and night states from the 5th to the 31st floor, with landmark travel times pinned across the skyline.</p>
+        <span class="go">Open the tour ↗</span>
+      </div>
+    </a>
+    <a class="capture-card reveal" href="https://cinosky.in/MappingWork/Adani_Pune/adani_01.html" target="_blank" rel="noopener">
+      <div class="capture-media"><img src="assets/projects/capture/adani.jpg" alt="Adani Pune — Gaussian splat capture" loading="lazy"></div>
+      <div class="capture-body">
+        <span class="k">Gaussian Splatting</span>
+        <h4>Adani · Pune</h4>
+        <p>A 3D Gaussian splat of a residential development by the Adani Group in Pune, captured mid-construction — tower cranes and all — and freely explorable in a browser SuperSplat viewer.</p>
+        <span class="go">Open the splat ↗</span>
+      </div>
+    </a>
+    <a class="capture-card reveal" href="https://cinosky.in/MappingWork/Raymond/Raymond_1.html" target="_blank" rel="noopener">
+      <div class="capture-media"><img src="assets/projects/capture/raymond.jpg" alt="Raymond building — Gaussian splat capture" loading="lazy"></div>
+      <div class="capture-body">
+        <span class="k">Gaussian Splatting</span>
+        <h4>Raymond</h4>
+        <p>A full-tower splat capture of the Raymond building, published as a free-fly browser scene: orbit, pan, and move around the real structure.</p>
+        <span class="go">Open the splat ↗</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="more">
+  <div class="section-head reveal">
+    <span class="idx">03</span>
     <h2>More</h2>
   </div>
   <p class="section-intro reveal">
@@ -440,14 +508,14 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
 
 <section class="section" id="about">
   <div class="section-head reveal">
-    <span class="idx">03</span>
+    <span class="idx">04</span>
     <h2>About</h2>
   </div>
   <div class="about-wrap">
     <div class="about-text reveal">
-      <p>I build games in <strong>Unreal Engine</strong>, mostly around multiplayer, physics, and VR. Right now I'm at <strong>Agovthi</strong>, building multiplayer systems and shipping client work for the UP Government, Apollo Hospital, and real-estate visualization clients.</p>
+      <p>I build real-time 3D in <strong>Unreal Engine</strong>: architectural visualization, VR walkthroughs, and games. At <strong>Agovthi</strong> I built a complete archviz product for Quidich Innovation — the property rendered inside its real Google Maps surroundings via Cesium — alongside shipped work for the UP Government and Apollo Hospital.</p>
       <p>Before that, two VR experiences I worked on at Unicorniz cut user-reported motion sickness by <strong>60%</strong>, and a VR game I helped build was played by <strong>3,000+ children</strong> at the 19th National Jamboree.</p>
-      <p>I like the hard parts: replication, RPCs, ragdoll physics that don't desync. I'm looking for a <strong>full-time role</strong> where I can go deeper on gameplay and multiplayer.</p>
+      <p>I like the hard parts: streaming real-world tiles, lighting that sells a space, locomotion that doesn't make people sick. I'm looking for a <strong>full-time role</strong> in real-time 3D — archviz or games.</p>
     </div>
     <div class="about-facts reveal">
       <div class="fact"><span class="k">Current</span><span class="v">Unreal Engine Dev, Agovthi</span></div>
@@ -456,7 +524,7 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
       <div class="fact"><span class="k">University</span><span class="v">University of Mumbai</span></div>
       <div class="fact"><span class="k">First-year CGPA</span><span class="v hl">9.09</span></div>
       <div class="fact"><span class="k">Engine</span><span class="v">Unreal Engine 5 · BP + C++</span></div>
-      <div class="fact"><span class="k">Also</span><span class="v">Blender · Steam OSS · EOS</span></div>
+      <div class="fact"><span class="k">Also</span><span class="v">Blender · Cesium · SuperSplat</span></div>
       <div class="fact"><span class="k">Status</span><span class="v hl">Open to full-time</span></div>
     </div>
   </div>
@@ -464,17 +532,17 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
 
 <section class="contact" id="contact">
   <h2>Let's <em>build</em> something.</h2>
-  <p class="contact-line">Open to full-time Unreal Engine and gameplay roles. The fastest way to reach me is email.</p>
+  <p class="contact-line">Open to full-time Unreal Engine roles across archviz and games. The fastest way to reach me is email.</p>
   <div class="contact-actions">
     <a class="contact-btn solid" href="mailto:devarthsambare123@gmail.com">✉ devarthsambare123@gmail.com</a>
     <a class="contact-btn" href="https://www.linkedin.com/in/devarth-sambare-2b8049218/" target="_blank">LinkedIn ↗</a>
-    <a class="contact-btn" href="assets/resume.pdf" target="_blank">Résumé ↗</a>
+    <a class="contact-btn" href="assets/resume-archviz.pdf" target="_blank">Résumé ↗</a>
   </div>
 </section>
 
 <footer>
   <span class="copy">© 2026 Devarth V. Sambare</span>
-  <span class="made">Unreal Engine Developer · Mumbai region</span>
+  <span class="made">Unreal Engine · Archviz & Real-Time 3D · Mumbai region</span>
 </footer>
 
 <div id="lightbox" onclick="closeLightbox(event)">
@@ -484,6 +552,64 @@ footer .made { font-family: 'JetBrains Mono', monospace; font-size: 11px; color:
 
 <script>
 const FEATURED = [
+  {
+    slug: 'realestate-archviz', title: 'Real Estate Archviz Platform', eyebrow: 'Agovthi \u00b7 Built for Quidich Innovation',
+    roles: [{t:'Unreal Engine Developer'}],
+    lead: 'A complete architectural visualization product for real-estate sales \u2014 owned by Quidich Innovation, who brought Agovthi in to build it. The property stands in its real surroundings, streamed from Google Maps through Cesium, under a full cinematic lighting pass.',
+    bullets: [
+      'Integrated Cesium with Google Maps 3D tiles so the towers render inside their actual neighbourhood, not a detached void',
+      'Built the connectivity showcase: how the property links to the roads, transit, and landmarks around it',
+      'Built the amenities view and a custom unit search that jumps buyers straight to a specific unit',
+      'Authored the lighting and presentation pass for a photoreal, sales-ready look'
+    ],
+    tags: ['Unreal Engine 5','Cesium','Google Maps 3D Tiles','Real Estate','Lighting','Interactive Product'],
+    hero: 'assets/projects/realestate-archviz/reel.mp4', heroIsVideo: true, poster: 'assets/projects/realestate-archviz/poster.jpg',
+    gallery: [
+      {type:'video', src:'assets/projects/realestate-archviz/reel2.mp4'},
+      {type:'video', src:'assets/projects/realestate-archviz/reel3.mp4'},
+    ]
+  },
+  {
+    slug: 'cellular-jail-vr', title: 'Cellular Jail VR', eyebrow: 'Unicorniz Innovation · 2023–24',
+    roles: [{t:'VR Developer Intern → Advanced'}],
+    lead: 'A VR walkthrough of the Cellular Jail (Kala Pani) in the Andaman Islands, the colonial-era prison where the British exiled Indian freedom fighters like V.D. Savarkar.',
+    bullets: [
+      'Integrated AI-driven NPCs and interactive narrative so players converse with historical figures',
+      'Reconstructed the three-storey, seven-wing architecture in Unreal + Blender with historical accuracy',
+      'Streamlined PCVR builds with advanced rendering for high performance',
+      'Contributed to custom locomotion work that cut user-reported motion sickness by 60%'
+    ],
+    tags: ['Unreal Engine 5','PCVR','AI NPCs','Historical Reconstruction','Custom Locomotion'],
+    hero: 'assets/projects/cellular-jail-vr/reel.mp4', heroIsVideo: true, poster: 'assets/projects/cellular-jail-vr/poster.jpg',
+    gallery: [
+      {type:'img', src:'assets/projects/cellular-jail-vr/hero.jpg'},
+      {type:'img', src:'assets/projects/cellular-jail-vr/g1.jpg'},
+      {type:'img', src:'assets/projects/cellular-jail-vr/g2.jpg'},
+      {type:'img', src:'assets/projects/cellular-jail-vr/g3.jpg'},
+      {type:'img', src:'assets/projects/cellular-jail-vr/g4.jpg'},
+      {type:'img', src:'assets/projects/cellular-jail-vr/g5.jpg'},
+    ]
+  },
+  {
+    slug: 'barren-island-vr', title: 'Barren Island VR', eyebrow: 'Unicorniz Innovation · 2023–24',
+    roles: [{t:'VR Developer Intern → Advanced'}],
+    lead: 'A VR experience of Barren Island, the only active volcano in South Asia. Surface eruptions, an underwater dive, and marine life from a place no civilian can actually visit.',
+    bullets: [
+      'Built the interactive VR environment with AI-driven NPCs using behaviour trees and pathfinding',
+      'Created the volcanic terrain and underwater world in Unreal + Blender + Gaia',
+      'Packaged and optimized for both Standalone VR and PCVR with custom locomotion options',
+      'Measured a 20% increase in user engagement via NPC interaction duration'
+    ],
+    tags: ['Unreal Engine 5','AI Behaviour Trees','Standalone + PCVR','Gaia Terrain'],
+    hero: 'assets/projects/barren-island-vr/reel.mp4', heroIsVideo: true, poster: 'assets/projects/barren-island-vr/poster.jpg',
+    gallery: [
+      {type:'img', src:'assets/projects/barren-island-vr/hero.jpg'},
+      {type:'img', src:'assets/projects/barren-island-vr/g1.jpg'},
+      {type:'img', src:'assets/projects/barren-island-vr/g2.jpg'},
+      {type:'img', src:'assets/projects/barren-island-vr/g3.jpg'},
+      {type:'img', src:'assets/projects/barren-island-vr/g4.jpg'},
+    ]
+  },
   {
     slug: 'scout-guide-vr', title: 'Scout Guide VR', eyebrow: 'Agovthi · UP Government · 2024',
     roles: [{t:'Unreal Engine Developer'}],
@@ -526,47 +652,6 @@ const FEATURED = [
       {type:'img', src:'assets/projects/cycle-game/g4.jpg'},
       {type:'img', src:'assets/projects/cycle-game/g5.jpg'},
       {type:'img', src:'assets/projects/cycle-game/g6.jpg'},
-    ]
-  },
-  {
-    slug: 'cellular-jail-vr', title: 'Cellular Jail VR', eyebrow: 'Unicorniz Innovation · 2023–24',
-    roles: [{t:'VR Developer Intern → Advanced'}],
-    lead: 'A VR walkthrough of the Cellular Jail (Kala Pani) in the Andaman Islands, the colonial-era prison where the British exiled Indian freedom fighters like V.D. Savarkar.',
-    bullets: [
-      'Integrated AI-driven NPCs and interactive narrative so players converse with historical figures',
-      'Reconstructed the three-storey, seven-wing architecture in Unreal + Blender with historical accuracy',
-      'Streamlined PCVR builds with advanced rendering for high performance',
-      'Contributed to custom locomotion work that cut user-reported motion sickness by 60%'
-    ],
-    tags: ['Unreal Engine 5','PCVR','AI NPCs','Historical Reconstruction','Custom Locomotion'],
-    hero: 'assets/projects/cellular-jail-vr/reel.mp4', heroIsVideo: true, poster: 'assets/projects/cellular-jail-vr/poster.jpg',
-    gallery: [
-      {type:'img', src:'assets/projects/cellular-jail-vr/hero.jpg'},
-      {type:'img', src:'assets/projects/cellular-jail-vr/g1.jpg'},
-      {type:'img', src:'assets/projects/cellular-jail-vr/g2.jpg'},
-      {type:'img', src:'assets/projects/cellular-jail-vr/g3.jpg'},
-      {type:'img', src:'assets/projects/cellular-jail-vr/g4.jpg'},
-      {type:'img', src:'assets/projects/cellular-jail-vr/g5.jpg'},
-    ]
-  },
-  {
-    slug: 'barren-island-vr', title: 'Barren Island VR', eyebrow: 'Unicorniz Innovation · 2023–24',
-    roles: [{t:'VR Developer Intern → Advanced'}],
-    lead: 'A VR experience of Barren Island, the only active volcano in South Asia. Surface eruptions, an underwater dive, and marine life from a place no civilian can actually visit.',
-    bullets: [
-      'Built the interactive VR environment with AI-driven NPCs using behaviour trees and pathfinding',
-      'Created the volcanic terrain and underwater world in Unreal + Blender + Gaia',
-      'Packaged and optimized for both Standalone VR and PCVR with custom locomotion options',
-      'Measured a 20% increase in user engagement via NPC interaction duration'
-    ],
-    tags: ['Unreal Engine 5','AI Behaviour Trees','Standalone + PCVR','Gaia Terrain'],
-    hero: 'assets/projects/barren-island-vr/reel.mp4', heroIsVideo: true, poster: 'assets/projects/barren-island-vr/poster.jpg',
-    gallery: [
-      {type:'img', src:'assets/projects/barren-island-vr/hero.jpg'},
-      {type:'img', src:'assets/projects/barren-island-vr/g1.jpg'},
-      {type:'img', src:'assets/projects/barren-island-vr/g2.jpg'},
-      {type:'img', src:'assets/projects/barren-island-vr/g3.jpg'},
-      {type:'img', src:'assets/projects/barren-island-vr/g4.jpg'},
     ]
   },
   {
