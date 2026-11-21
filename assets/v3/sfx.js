@@ -1,58 +1,76 @@
-/* Tiny sound layer. Quiet, sparse, and only after the visitor interacts.
-   Toggle with any element that has [data-sound-toggle]. Choice is remembered. */
+/* Sound layer. Quiet, sparse, and only after the visitor interacts.
+   <script src="sfx.js" data-sounds="click:.2,hover:.06" data-click="click" data-hover="hover">
+   - [data-sfx="name"] on an element plays that sound on click instead of the default click.
+   - [data-sound-toggle] toggles sound; the choice is remembered.
+   - window.SFX = { play(name, vol?), on(), unlocked(), unlock(), set(bool), stop(name) } */
 (function () {
-  var base = (document.currentScript && document.currentScript.src || '').replace(/sfx\.js.*$/, 'sfx/');
-  var names = ['tick', 'charge', 'chime', 'whoosh'];
-  var vol = { tick: 0.18, charge: 0.28, chime: 0.3, whoosh: 0.25 };
-  var cache = {};
-  var on = true;
+  var tag = document.currentScript;
+  var base = (tag && tag.src || '').replace(/sfx\.js.*$/, 'sfx/');
+  var vol = {};
+  ((tag && tag.getAttribute('data-sounds')) || '').split(',').forEach(function (p) {
+    var kv = p.split(':'); if (kv[0]) vol[kv[0].trim()] = parseFloat(kv[1]) || 0.2;
+  });
+  var clickName = tag && tag.getAttribute('data-click');
+  var hoverName = tag && tag.getAttribute('data-hover');
+  var cache = {}, live = {};
+  var on = true, unlocked = false;
   try { on = localStorage.getItem('dvs-sound') !== 'off'; } catch (e) {}
-  var unlocked = false;
+  var canHover = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
 
-  function load() {
-    names.forEach(function (n) {
-      var a = new Audio(base + n + '.mp3');
-      a.preload = 'auto';
-      a.volume = vol[n];
-      cache[n] = a;
-    });
-  }
-  function play(n) {
-    if (!on || !unlocked || !cache[n]) return;
+  Object.keys(vol).forEach(function (n) {
+    var a = new Audio(); a.preload = 'auto'; a.src = base + n + '.mp3'; a.volume = vol[n]; cache[n] = a;
+  });
+
+  function play(n, v) {
+    if (!on || !unlocked || !cache[n]) return null;
     try {
       var a = cache[n].cloneNode();
-      a.volume = vol[n];
+      a.volume = Math.max(0, Math.min(1, v == null ? vol[n] : v));
       a.play().catch(function () {});
-    } catch (e) {}
+      live[n] = a;
+      return a;
+    } catch (e) { return null; }
   }
+  function stop(n) { var a = live[n]; if (a) { try { a.pause(); } catch (e) {} live[n] = null; } }
   function paint() {
+    document.documentElement.classList.toggle('snd-off', !on);
     document.querySelectorAll('[data-sound-toggle]').forEach(function (b) {
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
       b.classList.toggle('is-off', !on);
-      var l = b.querySelector('.snd-label');
-      if (l) l.textContent = on ? 'Sound on' : 'Sound off';
+      var l = b.querySelector('.snd-label'); if (l) l.textContent = on ? 'Sound on' : 'Sound off';
     });
+  }
+  function set(v) {
+    on = !!v;
+    try { localStorage.setItem('dvs-sound', on ? 'on' : 'off'); } catch (e) {}
+    if (!on) Object.keys(live).forEach(stop);
+    paint();
+    document.dispatchEvent(new CustomEvent('sfx:change', { detail: { on: on } }));
   }
   function unlock() { unlocked = true; }
 
-  load();
-  window.addEventListener('pointerdown', unlock, { once: true, capture: true });
-  window.addEventListener('keydown', unlock, { once: true, capture: true });
+  window.addEventListener('pointerdown', unlock, { capture: true });
+  window.addEventListener('keydown', unlock, { capture: true });
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-sound-toggle]');
-    if (t) {
-      on = !on;
-      try { localStorage.setItem('dvs-sound', on ? 'on' : 'off'); } catch (err) {}
-      paint();
-      if (on) { unlocked = true; play('tick'); }
-      return;
-    }
+    if (t) { set(!on); if (on) { unlocked = true; play(clickName); } return; }
     var s = e.target.closest('[data-sfx]');
-    if (s) { play(s.getAttribute('data-sfx')); return; }
-    if (e.target.closest('a, button')) play('tick');
+    if (s) { var n = s.getAttribute('data-sfx'); if (n !== 'none') play(n); return; }
+    if (clickName && e.target.closest('a, button, [role="button"], summary')) play(clickName);
   });
 
-  document.addEventListener('DOMContentLoaded', paint);
-  window.SFX = { play: play };
+  if (hoverName && canHover) {
+    var lastEl = null, lastT = 0;
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest('a, button, [data-hover]');
+      if (!el || el === lastEl) { if (!el) lastEl = null; return; }
+      lastEl = el;
+      var now = performance.now(); if (now - lastT < 90) return; lastT = now;
+      play(hoverName);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint); else paint();
+  window.SFX = { play: play, stop: stop, on: function () { return on; }, unlocked: function () { return unlocked; }, unlock: unlock, set: set };
 })();
