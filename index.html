@@ -118,13 +118,8 @@ button.card:hover .card-m img,button.card:hover .card-m video{transform:scale(1.
 .card-b b{display:block;font-family:'Sora';font-weight:700;font-size:19px;letter-spacing:-.025em;line-height:1.2}
 .card-b small{display:block;font-size:14.5px;color:var(--dim);margin-top:5px}
 .card-b em{display:inline-block;font-style:normal;font-family:'DM Mono';font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--acc-t);background:var(--acc-soft);padding:5px 9px;border-radius:7px;margin-top:14px}
-.card.txt{padding:24px;display:flex;flex-direction:column;justify-content:center;background:transparent;box-shadow:none;border:1.5px dashed var(--line2)}
-.card.txt li{padding:14px 0;border-top:1px solid var(--line)}
-.card.txt li:first-child{border-top:0;padding-top:12px}
-.card.txt b{display:block;font-family:'Sora';font-weight:700;font-size:17px;letter-spacing:-.02em}
-.card.txt span{display:block;font-size:14.5px;color:var(--dim);margin-top:3px}
 @media(max-width:940px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
-@media(max-width:560px){.grid{gap:10px}.card{border-radius:16px}.card-b{padding:12px 12px 14px}.card-b b{font-size:14px}.card-b small{font-size:12.5px;margin-top:3px}.card-b em{display:none}.card-k{left:8px;top:8px;font-size:9.5px;padding:4px 7px}.card.txt{grid-column:span 2;order:2;padding:16px 18px}}
+@media(max-width:560px){.grid{gap:10px}.card{border-radius:16px}.card-b{padding:12px 12px 14px}.card-b b{font-size:14px}.card-b small{font-size:12.5px;margin-top:3px}.card-b em{display:none}.card-k{left:8px;top:8px;font-size:9.5px;padding:4px 7px}}
 
 /* about */
 .about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(28px,6vw,90px)}
@@ -277,7 +272,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding
       </div>
       <ul class="xp rv" style="--d:.08s">
         <li><div class="when">2026 to now</div><div><b>Indie Developer</b><small>DevSpawn</small><p>Designed, built and shipped OVERLOAD alone: game, backend, store release, trailer and website.</p></div></li>
-        <li><div class="when">Sep 2024 to Aug 2026</div><div><b>Unreal Engine Generalist</b><small>Agovthi Tech</small><p>Scout Guide VR, played by 3,000+ children at a national event. Cycle Game for Apollo Hospital, Krushi VR and a co-op survival prototype.</p></div></li>
+        <li><div class="when">Sep 2024 to Aug 2026</div><div><b>Unreal Engine Generalist</b><small>Agovthi Tech</small><p>Scout Guide VR, played by 3,000+ children at a national event. Cycle Game for Apollo Hospital and a co-op survival prototype.</p></div></li>
         <li><div class="when">Mar to Jul 2024</div><div><b>VR Developer</b><small>Unicorniz Innovation</small><p>Built four VR comfort systems that cut reported motion sickness by 60%, and gained 30 FPS on PCVR builds.</p></div></li>
         <li><div class="when">Mar to May 2023</div><div><b>VR Developer Intern</b><small>Unicorniz Innovation</small><p>First shipped VR: Barren Island VR and Cellular Jail VR.</p></div></li>
       </ul>
@@ -371,13 +366,10 @@ $$('.rv').forEach(el=>io.observe(el));
     {t:'Dicino',c:'Game jam · 2024',kind:'Solo',s:'Made alone, on a deadline',d:'A dice puzzle game with a casino look, made alone against a jam deadline.',v:P+'dicino/reel.mp4',p:P+'dicino/poster.jpg',g:P+'dicino',f:[['Role','Mechanics, 3D models, UI, packaging'],['Type','Puzzle'],['Team','Solo']]},
     {t:'CourtRoom VR',c:'Team project · 2026',kind:'VR',s:'Animations and case logic',d:'A full Indian courtroom in VR where a case plays out in front of you.',v:P+'courtroom-vr/reel.mp4',p:P+'courtroom-vr/poster.jpg',f:[['Role','Character animation, case simulation logic'],['Type','VR simulation'],['Team','Team project']]},
     {t:'Cabin in the Woods',c:'Cinematic exercise · 2025',kind:'Cinematic',s:'3 scenes in 3 hours',d:'Three cinematic environment scenes lit, dressed and shot in about three hours.',v:P+'cabin-in-woods/reel.mp4',p:P+'cabin-in-woods/poster.jpg',f:[['Role','Lighting, set dressing, camera'],['Engine','Unreal Engine 5'],['Type','Cinematics']]},
-    {txt:1},
     {t:'Primitive Chaos',c:'Co-op survival',kind:'Prototype',s:'In progress',d:'A stone age co-op survival prototype. Hunt together, keep the fire alive and feed the tribe. I worked on it as a core developer at Agovthi.',p:C+'camp.jpg',th:[C+'direwolf.jpg',C+'deer.jpg',C+'hunt.jpg',C+'camp-rain.jpg'],f:[['Role','Online co-op, AI animals, procedural islands'],['Engine','Unity'],['Status','Prototype']]}
   ];
   const grid=$('#grid');
-  grid.innerHTML=M.map((m,i)=>m.txt
-    ?'<div class="card txt rv" style="--d:'+(i%3*.06)+'s"><div class="lbl">Also shipped</div><ul><li><b>Krushi VR</b><span>UP Government. VR training that teaches farmers modern practices.</span></li><li><b>JBM University VR</b><span>A campus in VR, shown to the President and Prime Minister of India.</span></li></ul></div>'
-    :'<button class="card rv" data-i="'+i+'" style="--d:'+(i%3*.06)+'s" aria-label="'+m.t+'"><span class="card-m"><img src="'+m.p+'" alt="" loading="lazy">'+(m.v?'<video muted loop playsinline preload="none" data-src="'+m.v+'"></video>':'')+'<span class="card-k">'+m.kind+'</span></span><span class="card-b"><b>'+m.t+'</b><small>'+m.c+'</small><em>'+m.s+'</em></span></button>').join('');
+  grid.innerHTML=M.map((m,i)=>'<button class="card rv" data-i="'+i+'" style="--d:'+(i%3*.06)+'s" aria-label="'+m.t+'"><span class="card-m"><img src="'+m.p+'" alt="" loading="lazy">'+(m.v?'<video muted loop playsinline preload="none" data-src="'+m.v+'"></video>':'')+'<span class="card-k">'+m.kind+'</span></span><span class="card-b"><b>'+m.t+'</b><small>'+m.c+'</small><em>'+m.s+'</em></span></button>').join('');
   $$('.rv',grid).forEach(el=>io.observe(el));
   if(FINE)$$('button.card',grid).forEach(c=>{const v=$('video',c);if(!v)return;
     c.addEventListener('mouseenter',()=>{if(!v.src)v.src=v.dataset.src;v.play().then(()=>c.classList.add('playing')).catch(()=>{})});
